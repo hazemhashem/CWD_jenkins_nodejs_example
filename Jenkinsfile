@@ -43,7 +43,7 @@ pipeline {
                     git add .
                     git commit -m "update the appdeploy file"
                         """
-                    withCredentials([usernamePassword(credentialsId: 'githubb', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                    withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                         sh "git push https://$USERNAME:$PASSWORD@github.com/hazemhashem/testdevops.git"
                      }        
                                                 
