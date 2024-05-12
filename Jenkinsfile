@@ -26,7 +26,7 @@ pipeline {
          stage('push') {
              steps {
                  withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-                     sh 'docker login -u ${USERNAME} --password ${PASSWORD}'
+                     sh 'docker login -u ${USERNAME} --password ${PASSWORD} '
               
                  }
              }
@@ -44,7 +44,7 @@ pipeline {
                     git commit -m "update the appdeploy file"
                         """
                     withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-                        sh "git push https://$USERNAME:$PASSWORD@github.com/hazemhashem/testdevops.git"
+                        sh "git push https://$USERNAME:$PASSWORD@github.com/hazemhashem/testdevops.git rds_redis "
                      }        
                                                 
 
