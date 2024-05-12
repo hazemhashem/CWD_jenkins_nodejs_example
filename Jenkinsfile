@@ -12,25 +12,26 @@ pipeline {
 
     }
     stages {
+
+
          stage('build') {
+             steps {
+                 withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                     sh 'docker login -u ${USERNAME} --password ${PASSWORD} '
+                      sh "docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} ."
+                 }
+             }
+         }
+         stage('push') {
              steps {
                  script{
         
-                         sh "docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} ."
                          sh "docker push ${IMAGE_NAME}:${BUILD_NUMBER}"
-                      
                  }
           
              } 
          }
-         stage('push') {
-             steps {
-                 withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-                     sh 'docker login -u ${USERNAME} --password ${PASSWORD} '
-              
-                 }
-             }
-         }
+
         stage('Github') {
             steps {
                  sh "git checkout main"
