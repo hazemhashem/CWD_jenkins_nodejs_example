@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: api-container
-        image: hazemhashem100/nodejs-app:latest
+        image: hazemhashem100/nodejs-app:6
         ports:
         - containerPort: 3000
         env:
