@@ -15,10 +15,10 @@ pipeline {
          stage('build') {
              steps {
                  script{
-                     withDockerRegistry(credentialsId: 'dockerhub') {
+        
                          sh "docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} ."
                          sh "docker push ${IMAGE_NAME}:${BUILD_NUMBER}"
-                     } 
+                      
                  }
           
              } 
