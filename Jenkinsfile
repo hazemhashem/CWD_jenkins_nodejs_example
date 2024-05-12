@@ -45,7 +45,7 @@ pipeline {
                     git commit -m "update the appdeploy file"
                         """
                     withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-                        sh "git push https://$USERNAME:$PASSWORD@github.com/hazemhashem/testdevops.git rds_redis "
+                        sh "git push https://$USERNAME:$PASSWORD@github.com/hazemhashem/jenkins_nodejs_example.git rds_redis "
                      }        
                                                 
 
