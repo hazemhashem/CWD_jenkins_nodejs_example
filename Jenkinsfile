@@ -35,7 +35,7 @@ pipeline {
         stage('Github') {
             steps {
                  sh "git checkout rds_redis"
-               sh "sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' ${WORKSPACE}/deployment/appdeploy.yml "
+               sh "sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' ${WORKSPACE}/deployment/DeploymentApp.yml "
 
                 script{
                     sh """
