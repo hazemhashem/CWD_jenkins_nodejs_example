@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nodeapp
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/hazemhashem/jenkins_nodejs_example.git
+    targetRevision: rds_redis
+    path: deployment
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: external-secrets
+  syncPolicy:
+    automated: {}
+    syncOptions:
+    - CreateNamespace=true
