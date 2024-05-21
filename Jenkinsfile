@@ -12,29 +12,30 @@ pipeline {
 
     }
     stages {
+
+
          stage('build') {
              steps {
+                 withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                     sh 'docker login -u ${USERNAME} --password ${PASSWORD} '
+                      sh "docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} ."
+                 }
+             }
+         }
+         stage('push') {
+             steps {
                  script{
-                     withDockerRegistry(credentialsId: 'dockerhub') {
-                         sh "docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} ."
+        
                          sh "docker push ${IMAGE_NAME}:${BUILD_NUMBER}"
-                     } 
                  }
           
              } 
          }
-         stage('push') {
-             steps {
-                 withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-                     sh 'docker login -u ${USERNAME} --password ${PASSWORD}'
-              
-                 }
-             }
-         }
+
         stage('Github') {
             steps {
-                 sh "git checkout main"
-               sh "sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' ${WORKSPACE}/deployment/appdeploy.yml "
+                 sh "git checkout rds_redis"
+               sh "sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' ${WORKSPACE}/deployment/DeploymentApp.yml "
 
                 script{
                     sh """
@@ -44,7 +45,7 @@ pipeline {
                     git commit -m "update the appdeploy file"
                         """
                     withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-                        sh "git push https://$USERNAME:$PASSWORD@github.com/hazemhashem/testdevops.git"
+                        sh "git push https://$USERNAME:$PASSWORD@github.com/hazemhashem/jenkins_nodejs_example.git rds_redis "
                      }        
                                                 
 
