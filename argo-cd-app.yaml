@@ -11,7 +11,7 @@ spec:
     path: deployment
   destination:
     server: https://kubernetes.default.svc
-    namespace: external-secrets
+    namespace: cwd-app
   syncPolicy:
     automated: {}
     syncOptions:
